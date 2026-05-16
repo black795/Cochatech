@@ -1,0 +1,21 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e5]: K
+    - generic [ref=e6]:
+      - heading "empleaemprende.bo" [level=1] [ref=e7]
+      - paragraph [ref=e8]: Fundación Kallpa · Módulo Financiero
+  - generic [ref=e9]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]: KA
+        - generic [ref=e14]:
+          - paragraph [ref=e15]: Kallpa · Asesor Financiero
+          - paragraph [ref=e16]: en línea
+      - generic [ref=e18]:
+        - textbox "Mensaje al asesor" [ref=e19]:
+          - /placeholder: Escribí un mensaje…
+        - button "Enviar" [disabled] [ref=e20]
+    - generic [ref=e22]:
+      - generic [ref=e23]: 📊
+      - paragraph [ref=e24]: Tu análisis aparecerá acá
+      - paragraph [ref=e25]: Contale a Kallpa de tu negocio en el chat. Cuando tenga suficiente info, vas a ver acá tus KPIs, gráficos y consejos.

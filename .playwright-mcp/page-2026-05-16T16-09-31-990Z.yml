@@ -1,0 +1,149 @@
+- generic [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]: K
+      - generic [ref=e6]:
+        - heading "empleaemprende.bo" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Fundación Kallpa · Módulo Financiero
+      - generic [ref=e43]: Análisis listo
+    - generic [ref=e9]:
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: KA
+          - generic [ref=e14]:
+            - paragraph [ref=e15]: Kallpa · Asesor Financiero
+            - paragraph [ref=e16]: en línea
+        - generic [ref=e17]:
+          - generic [ref=e27]:
+            - paragraph [ref=e28]: ¡Hola! Soy Kallpa, tu asesor financiero digital de la Fundación Kallpa. Contame de tu emprendimiento, pues — ¿qué vendés y desde dónde?
+            - paragraph [ref=e29]: 12:07
+          - generic [ref=e31]:
+            - paragraph [ref=e32]: Hola, vendo empanadas desde mi casa en Cochabamba. Hago como 60 por día y las vendo a 6 bolivianos cada una. Pago 350 Bs de alquiler, 90 Bs de luz. La masa me cuesta 1.50 Bs por empanada, el relleno 2 Bs, el aceite 0.50 Bs, la bolsita de entrega 0.30 Bs"
+            - paragraph [ref=e33]: 12:08
+          - generic [ref=e45]:
+            - paragraph [ref=e46]: "¡Qué lindo emprendimiento, pues! Empanadas caseras... ¡eso siempre tiene demanda en Cochabamba! 🥟 Mirá, ya me diste un montón de datos súper valiosos, ¡genial! Dejame ver si entendí bien todo: 📌 Vendés empanadas a **6 Bs** cada una. 📌 Hacés como **60 por día**. 📌 Pagás **350 Bs de alquiler** y **90 Bs de luz** al mes. 📌 Cada empanada te cuesta en materiales: masa (1.50 Bs) + relleno (2 Bs) + aceite (0.50 Bs) + bolsita (0.30 Bs) = **4.30 Bs por empanada**. Ahora, para sacar bien tus números, necesito confirmar una cosita nomás: esos 60 empanadas por día, ¿cuántos días al mes más o menos trabajás? ¿Todos los días, de lunes a sábado, o cómo es tu ritmo?"
+            - paragraph [ref=e47]: 12:08
+          - generic [ref=e49]:
+            - paragraph [ref=e50]: trabajo todos los dias
+            - paragraph [ref=e51]: 12:08
+          - generic [ref=e53]:
+            - paragraph [ref=e54]: "¡Todos los días, pues! Eso sí que es ser trabajadora, ¡te felicito! 💪 Entonces serían 60 empanadas × 30 días = **1,800 empanadas al mes**. ¡Eso es harto! Dejame hacer un resumen rápido de lo que tengo: 🔸 **Lo que ganás:** 1,800 empanadas × 6 Bs = **10,800 Bs al mes** en ventas. 🔸 **Costos que cambian según cuánto producís:** 1,800 × 4.30 Bs = **7,740 Bs al mes** (masa, relleno, aceite, bolsitas). 🔸 **Costos que pagás sí o sí cada mes:** alquiler (350 Bs) + luz (90 Bs) = **440 Bs al mes**. 📊 Tu **ganancia** quedaría así: 10,800 - 7,740 - 440 = **2,620 Bs al mes**. O sea, de cada empanada de 6 Bs, te quedan **1.46 Bs de ganancia limpia**. ¡No está nada mal! Ahora, una preguntita más para afinar bien los números: aparte del alquiler y la luz, ¿pagás algo más cada mes que sea fijo? Por ejemplo, agua, gas para cocinar, transporte, internet... ¿algo así?"
+            - paragraph [ref=e55]: 12:09
+        - generic [ref=e18]:
+          - textbox "Mensaje al asesor" [active] [ref=e19]:
+            - /placeholder: Escribí un mensaje…
+          - button "Enviar" [disabled] [ref=e20]
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - heading "Emprendedora" [level=2] [ref=e56]
+          - paragraph [ref=e57]: Empanadas · Cochabamba
+          - paragraph [ref=e58]: Análisis del 2026-05-16
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - paragraph [ref=e61]: Costos Fijos Totales
+            - paragraph [ref=e62]: Bs 440
+            - paragraph [ref=e63]: Gastos fijos al mes
+          - generic [ref=e64]:
+            - paragraph [ref=e65]: Costo Variable por Unidad
+            - paragraph [ref=e66]: Bs 4.3
+            - paragraph [ref=e67]: Costo de producir 1 torta
+          - generic [ref=e68]:
+            - paragraph [ref=e69]: Precio de Venta
+            - paragraph [ref=e70]: Bs 6
+            - paragraph [ref=e71]: Precio por torta
+          - generic [ref=e72]:
+            - paragraph [ref=e73]: Margen de Ganancia
+            - paragraph [ref=e74]: 28.33%
+            - paragraph [ref=e75]: Margen por unidad vendida
+          - generic [ref=e76]:
+            - paragraph [ref=e77]: Punto de Equilibrio
+            - paragraph [ref=e78]: 259 unidades/mes
+            - paragraph [ref=e79]: Mínimo para no perder
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - img "ok" [ref=e82]: ✅
+            - heading "¡Estás en ganancia, pues!" [level=3] [ref=e83]
+          - paragraph [ref=e84]:
+            - text: Vendés
+            - strong [ref=e85]: "1800"
+            - text: tortas · Necesitás
+            - strong [ref=e86]: "259"
+            - text: "tortas · Excedente:"
+            - strong [ref=e87]: "1541"
+            - text: tortas
+          - progressbar [ref=e88]
+          - paragraph [ref=e90]: 100% del punto de equilibrio
+        - generic [ref=e91]:
+          - heading "Distribución de Costos" [level=3] [ref=e92]
+          - generic [ref=e94]:
+            - list [ref=e96]:
+              - listitem [ref=e97]:
+                - img "Costos Fijos legend icon" [ref=e98]
+                - text: Costos Fijos
+              - listitem [ref=e100]:
+                - img "Costos Variables (mensual estimado) legend icon" [ref=e101]
+                - text: Costos Variables (mensual estimado)
+            - application [ref=e103]
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - heading "Costos Detallados" [level=3] [ref=e115]
+            - button "Exportar CSV" [ref=e116] [cursor=pointer]
+          - table [ref=e118]:
+            - rowgroup [ref=e119]:
+              - row "# Concepto Tipo Monto (Bs) Frecuencia" [ref=e120]:
+                - columnheader "#" [ref=e121]
+                - columnheader "Concepto" [ref=e122]
+                - columnheader "Tipo" [ref=e123]
+                - columnheader "Monto (Bs)" [ref=e124]
+                - columnheader "Frecuencia" [ref=e125]
+            - rowgroup [ref=e126]:
+              - row "COST_001 Alquiler Fijo 350.00 mensual" [ref=e127]:
+                - cell "COST_001" [ref=e128]
+                - cell "Alquiler" [ref=e129]
+                - cell "Fijo" [ref=e130]
+                - cell "350.00" [ref=e131]
+                - cell "mensual" [ref=e132]
+              - row "COST_002 Luz Fijo 90.00 mensual" [ref=e133]:
+                - cell "COST_002" [ref=e134]
+                - cell "Luz" [ref=e135]
+                - cell "Fijo" [ref=e136]
+                - cell "90.00" [ref=e137]
+                - cell "mensual" [ref=e138]
+              - row "COST_003 Masa por empanada Variable 1.50 por unidad" [ref=e139]:
+                - cell "COST_003" [ref=e140]
+                - cell "Masa por empanada" [ref=e141]
+                - cell "Variable" [ref=e142]
+                - cell "1.50" [ref=e143]
+                - cell "por unidad" [ref=e144]
+              - row "COST_004 Relleno por empanada Variable 2.00 por unidad" [ref=e145]:
+                - cell "COST_004" [ref=e146]
+                - cell "Relleno por empanada" [ref=e147]
+                - cell "Variable" [ref=e148]
+                - cell "2.00" [ref=e149]
+                - cell "por unidad" [ref=e150]
+              - row "COST_005 Aceite por empanada Variable 0.50 por unidad" [ref=e151]:
+                - cell "COST_005" [ref=e152]
+                - cell "Aceite por empanada" [ref=e153]
+                - cell "Variable" [ref=e154]
+                - cell "0.50" [ref=e155]
+                - cell "por unidad" [ref=e156]
+              - row "COST_006 Bolsita de entrega por empanada Variable 0.30 por unidad" [ref=e157]:
+                - cell "COST_006" [ref=e158]
+                - cell "Bolsita de entrega por empanada" [ref=e159]
+                - cell "Variable" [ref=e160]
+                - cell "0.30" [ref=e161]
+                - cell "por unidad" [ref=e162]
+              - 'row "Totales Total Fijos: Bs 440 Total Variables/u: Bs 4.3" [ref=e163]':
+                - cell "Totales" [ref=e164]
+                - 'cell "Total Fijos: Bs 440" [ref=e165]'
+                - 'cell "Total Variables/u: Bs 4.3" [ref=e166]'
+                - cell [ref=e167]
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - generic [ref=e171]: KA
+            - paragraph [ref=e172]: Kallpa · Asesor Financiero Digital
+          - paragraph [ref=e173]: ¡Felicidades pues, qué lindo ver cómo tu negocio de empanadas está volando, con 1.800 unidades al mes estás bien por encima de las 259 que necesitás para cubrir tus costos, así que ahí nomás seguí con esa fuerza! Tu ganancia neta de Bs 2.620 al mes demuestra que le estás metiendo garra y que tu margen del 28% está sanito, eso ya es plata que podés reinvertir de a poco para hacer crecer tu emprendimiento. Desde Fundación Kallpa te animamos a seguir así, porque con esa dedicación vas a llegar bien lejos nomás.
+          - generic [ref=e174]:
+            - generic [ref=e175]: 10:47 a.m.
+            - generic [ref=e176]: ✓✓
+  - alert [ref=e40]

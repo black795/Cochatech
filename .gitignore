@@ -36,3 +36,12 @@ next-env.d.ts
 # backups
 lib.bak/
 types.bak/
+
+# Claude Code session state
+.claude/
+
+# test artifacts
+.playwright-mcp/
+dashboard-*.png
+lorena-response.json
+/tmp/

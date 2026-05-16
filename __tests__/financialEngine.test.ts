@@ -4,7 +4,7 @@ import {
   calcularMargenUnitario,
   calcularMargenPorcentual,
   calcularPuntoEquilibrio,
-} from "../lib/financialEngine"
+} from "../backend/lib/financialEngine"
 import type { CostItem } from "../types/kallpa"
 
 const lorenaItems: CostItem[] = [

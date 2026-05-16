@@ -1,4 +1,4 @@
-import type { KallpaAnalysis, CostItem } from "../types/kallpa"
+import type { KallpaAnalysis, CostItem } from "@/types/kallpa"
 import { buildFullAnalysis } from "./financialEngine"
 
 const rawItems: CostItem[] = [

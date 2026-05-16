@@ -6,7 +6,7 @@ import type {
   ChartDataPoint,
   EquilibriumProgress,
   ClaudeExtractionResponse,
-} from "../types/kallpa"
+} from "@/types/kallpa"
 
 export function calcularCostosFijosTotales(items: CostItem[]): number {
   return items

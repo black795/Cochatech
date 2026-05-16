@@ -76,6 +76,9 @@ export interface ChatRequest {
 export interface ChatResponse {
   reply: string
   analysis: KallpaAnalysis | null
+  canvas_detection?: CanvasDetection
+  canvas_progress?: CanvasProgress
+  canvas_ready?: boolean
 }
 
 export interface UIMessage {
@@ -103,4 +106,131 @@ export interface ClaudeExtractionResponse {
     rubro: string | null
     ciudad: string | null
   }
+}
+
+export interface PlanillaProducto {
+  nombre: string
+  descripcion: string
+  precioVenta: number
+  costoTotal: number
+  ganancia: number
+}
+
+export interface PlanillaCostos {
+  emprendedora: string
+  emprendimiento: string
+  fechaActualizacion: string
+  productos: PlanillaProducto[]
+  tablaCostos: CostItem[]
+  costoFijoTotal: number
+  costoVariableTotal: number
+  costoTotalUnitario: number
+  puntoEquilibrio: number
+}
+
+export interface CanvasSeccion {
+  titulo: string
+  criterios: {
+    nombre: string
+    respuesta: string
+  }[]
+}
+
+export interface BusinessCanvas {
+  datosGenerales: {
+    nombreEmprendedora: string
+    nombreEmprendimiento: string
+    telefono: string
+    actividadPrincipal: string
+    lugarVenta: string
+    horarioVenta: string
+    diasVenta: string
+  }
+  segmentosClientes: CanvasSeccion
+  propuestaValor: CanvasSeccion
+  canales: CanvasSeccion
+  relacionClientes: CanvasSeccion
+  fuentesIngresos: {
+    lineas: { producto: string; metodoPago: string; precioEstimado: number }[]
+  }
+  recursosClaves: CanvasSeccion
+  actividadesClaves: CanvasSeccion
+  asociacionesClaves: {
+    socios: { nombre: string; aporte: string }[]
+  }
+  estructuraCostos: {
+    costos: { concepto: string; tipo: string; prioridad: string }[]
+  }
+  leanCanvas?: {
+    problema: string
+    solucion: string
+    propuestaValorUnica: string
+    ventajaCompetitiva: string
+    segmentoClientes: string
+    metricasClave: string
+    canales: string
+    estructuraCostos: string
+    fuentesIngreso: string
+  }
+  valueProposition?: {
+    buyerPersona: {
+      trabajosCliente: string
+      frustraciones: string
+      alegrias: string
+    }
+    propuestaValor: {
+      productosServicios: string
+      aliviadorFrustraciones: string
+      generadorAlegrias: string
+    }
+  }
+  jobsToBeDone?: {
+    persona: string
+    dolorProblema: string
+    solucionResultado: string
+    jobFuncional: string
+    jobSocial: string
+    jobEmocional: string
+    necesidadBasica: string
+    propuestaValorChave: string
+  }
+}
+
+export interface DocumentosOutput {
+  planillaCostos: PlanillaCostos
+  businessCanvas: BusinessCanvas
+}
+
+export type CanvasType =
+  | "business_model_canvas"
+  | "lean_canvas"
+  | "value_proposition"
+  | "jobs_to_be_done"
+  | "unknown"
+
+export interface CanvasDetection {
+  tipo: CanvasType
+  razon: string
+  confianza: "alta" | "media" | "baja"
+}
+
+export interface CanvasField {
+  key: string
+  label: string
+  valor: string
+  completo: boolean
+}
+
+export interface CanvasProgress {
+  tipo: CanvasType | null
+  campos_completos: CanvasField[]
+  campos_faltantes: string[]
+  porcentaje: number
+  listo_para_generar: boolean
+}
+
+export interface ConversationState {
+  financial_phase_complete: boolean
+  canvas_detection_done: boolean
+  canvas_progress: CanvasProgress | null
 }

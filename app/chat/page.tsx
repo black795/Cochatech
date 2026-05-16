@@ -1,12 +1,24 @@
 "use client"
 
 import { useState } from "react"
-import ChatPanel from "@/components/ChatPanel"
-import DashboardPanel from "@/components/DashboardPanel"
-import type { KallpaAnalysis } from "@/types/kallpa"
+import ChatPanel from "@/frontend/components/ChatPanel"
+import DashboardPanel from "@/frontend/components/DashboardPanel"
+import CanvasProgressBar from "@/frontend/components/CanvasProgressBar"
+import BusinessCanvasView from "@/frontend/components/BusinessCanvasView"
+import type {
+  BusinessCanvas,
+  CanvasProgress,
+  CanvasType,
+  KallpaAnalysis,
+} from "@/types/kallpa"
 
 export default function ChatPage() {
   const [analysis, setAnalysis] = useState<KallpaAnalysis | null>(null)
+  const [canvasProgress, setCanvasProgress] = useState<CanvasProgress | null>(
+    null
+  )
+  const [canvasType, setCanvasType] = useState<CanvasType | null>(null)
+  const [canvas, setCanvas] = useState<BusinessCanvas | null>(null)
 
   return (
     <main className="min-h-screen bg-[#F8F5F0]">
@@ -28,15 +40,47 @@ export default function ChatPage() {
         )}
       </header>
 
-      <div className="flex flex-col lg:flex-row gap-4 p-4 h-[calc(100vh-56px)]">
+      <div className="flex flex-col lg:flex-row gap-4 p-4 lg:h-[calc(100vh-56px)]">
         <div className="lg:w-1/2 h-[500px] lg:h-full">
-          <ChatPanel onAnalysisReady={(data) => setAnalysis(data)} />
+          <ChatPanel
+            onAnalysisReady={(data) => setAnalysis(data)}
+            onCanvasUpdate={(progress, tipo) => {
+              setCanvasProgress(progress)
+              setCanvasType(tipo)
+            }}
+            onCanvasReady={(c, tipo) => {
+              setCanvas(c)
+              setCanvasType(tipo)
+            }}
+          />
         </div>
 
-        <div className="lg:w-1/2 h-[500px] lg:h-full">
-          <DashboardPanel analysis={analysis} />
+        <div className="lg:w-1/2 h-[500px] lg:h-full flex flex-col gap-3 min-h-0">
+          <div className="flex-1 min-h-0">
+            <DashboardPanel analysis={analysis} />
+          </div>
+          {canvasProgress && (
+            <div className="flex-shrink-0">
+              <CanvasProgressBar
+                progress={canvasProgress}
+                canvasType={canvasType}
+              />
+            </div>
+          )}
         </div>
       </div>
+
+      {canvas && (
+        <div className="w-full px-4 pb-6 animate-fadeIn">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-sm font-semibold text-[#2D6A4F]">
+              Tu análisis estratégico
+            </span>
+            <div className="h-px flex-1 bg-gray-200" />
+          </div>
+          <BusinessCanvasView canvas={canvas} tipo={canvasType} />
+        </div>
+      )}
     </main>
   )
 }

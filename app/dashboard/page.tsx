@@ -1,10 +1,10 @@
-import { mockKallpaAnalysis } from "@/lib/mockDatabase"
+import { mockKallpaAnalysis } from "@/backend/lib/mockDatabase"
 import type { KallpaAnalysis } from "@/types/kallpa"
-import KPICards from "@/components/KPICards"
-import EquilibriumBadge from "@/components/EquilibriumBadge"
-import CostsTable from "@/components/CostsTable"
-import CostsPieChart from "@/components/CostsPieChart"
-import KallpaInsightCard from "@/components/KallpaInsightCard"
+import KPICards from "@/frontend/components/KPICards"
+import EquilibriumBadge from "@/frontend/components/EquilibriumBadge"
+import CostsTable from "@/frontend/components/CostsTable"
+import CostsPieChart from "@/frontend/components/CostsPieChart"
+import KallpaInsightCard from "@/frontend/components/KallpaInsightCard"
 
 const CHAT_SIMULADO =
   `Soy Lorena Mamani, hago tortas decoradas en Sacaba, Cochabamba.\n` +

@@ -1,4 +1,4 @@
-import type { CostItem, CostType } from "../types/kallpa"
+import type { CostItem, CostType } from "@/types/kallpa"
 
 const VARIABLE_KEYWORDS = [
   "harina",

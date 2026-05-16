@@ -2,6 +2,10 @@
 
 import { useState, useRef, useEffect } from "react"
 import type {
+  BusinessCanvas,
+  CanvasDetection,
+  CanvasProgress,
+  CanvasType,
   ChatMessage,
   KallpaAnalysis,
   UIMessage,
@@ -24,8 +28,12 @@ function formatTime(d: Date): string {
 
 export default function ChatPanel({
   onAnalysisReady,
+  onCanvasUpdate,
+  onCanvasReady,
 }: {
   onAnalysisReady: (data: KallpaAnalysis) => void
+  onCanvasUpdate: (progress: CanvasProgress, tipo: CanvasType) => void
+  onCanvasReady: (canvas: BusinessCanvas, tipo: CanvasType) => void
 }) {
   const [messages, setMessages] = useState<UIMessage[]>([])
   const [input, setInput] = useState("")
@@ -84,6 +92,10 @@ export default function ChatPanel({
       const data = (await res.json()) as {
         reply?: string
         analysis: KallpaAnalysis | null
+        canvas_detection?: CanvasDetection
+        canvas_progress?: CanvasProgress
+        canvas_ready?: boolean
+        canvas?: BusinessCanvas | null
       }
 
       const assistantMsg: UIMessage = {
@@ -98,6 +110,23 @@ export default function ChatPanel({
 
       if (data.analysis) {
         onAnalysisReady(data.analysis)
+      }
+
+      if (
+        data.canvas_detection &&
+        data.canvas_detection.tipo !== "unknown" &&
+        data.canvas_progress
+      ) {
+        onCanvasUpdate(data.canvas_progress, data.canvas_detection.tipo)
+      }
+
+      if (
+        data.canvas_ready &&
+        data.canvas &&
+        data.canvas_detection?.tipo &&
+        data.canvas_detection.tipo !== "unknown"
+      ) {
+        onCanvasReady(data.canvas, data.canvas_detection.tipo)
       }
     } catch (err) {
       console.error("[ChatPanel] fetch error:", err)

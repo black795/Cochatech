@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import Replicate from "replicate"
-import { buildFullAnalysis } from "@/lib/financialEngine"
-import { parseChatToItems } from "@/lib/chatProcessor"
+import { buildFullAnalysis } from "@/backend/lib/financialEngine"
+import { parseChatToItems } from "@/backend/lib/chatProcessor"
 import type { KallpaAnalysis } from "@/types/kallpa"
 
 export const runtime = "nodejs"

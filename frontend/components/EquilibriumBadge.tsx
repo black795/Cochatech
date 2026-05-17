@@ -11,58 +11,82 @@ export default function EquilibriumBadge({
   supera: boolean
   productoPlural?: string
 }) {
-  const {
-    ventas_actuales,
-    punto_equilibrio,
-    porcentaje_avance,
-    excedente_unidades,
-  } = progress
+  const { ventas_actuales, punto_equilibrio, porcentaje_avance, excedente_unidades } = progress
+  const barPct = Math.min(100, porcentaje_avance)
 
-  const containerCls = supera
-    ? "bg-green-50 border-green-200"
-    : "bg-yellow-50 border-yellow-200"
-  const textCls = supera ? "text-green-700" : "text-yellow-700"
-  const icon = supera ? "✅" : "⚠️"
-  const message = supera
-    ? "¡Estás en ganancia, pues!"
-    : "Necesitás vender más unidades nomás"
-  const barColor = supera ? "#2D6A4F" : "#E76F51"
+  const bg = supera
+    ? "linear-gradient(135deg, #1a6b4a 0%, #0a4a32 100%)"
+    : "linear-gradient(135deg, #b85c0a 0%, #7a3a00 100%)"
+  const barGradient = supera
+    ? "linear-gradient(90deg, #75daa8, #b1f0ce)"
+    : "linear-gradient(90deg, #f4a261, #ffd6a5)"
+  const accentColor = supera ? "#b1f0ce" : "#ffd6a5"
 
   return (
-    <div className={`${containerCls} border rounded-xl p-5 shadow-sm`}>
-      <div className="flex items-center gap-3 mb-3">
-        <span
-          className="text-2xl"
-          role="img"
-          aria-label={supera ? "ok" : "warning"}
-        >
-          {icon}
-        </span>
-        <h3 className={`font-bold text-lg ${textCls}`}>{message}</h3>
-      </div>
-      <p className="text-sm text-gray-700 mb-3">
-        Vendés <strong>{ventas_actuales}</strong> {productoPlural} · Necesitás{" "}
-        <strong>{punto_equilibrio}</strong> {productoPlural} · Excedente:{" "}
-        <strong>{excedente_unidades}</strong> {productoPlural}
-      </p>
-      <div
-        className="w-full bg-gray-200 rounded-full h-3 overflow-hidden"
-        role="progressbar"
-        aria-valuenow={porcentaje_avance}
-        aria-valuemin={0}
-        aria-valuemax={100}
-      >
-        <div
-          className="h-full transition-all duration-700"
+    <div
+      style={{
+        background: bg,
+        borderRadius: "var(--radius-xl)",
+        padding: "20px 22px",
+      }}
+    >
+      {/* Title row */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+        <span style={{ fontSize: 22, lineHeight: 1 }}>{supera ? "🎉" : "⚠️"}</span>
+        <h3
           style={{
-            width: `${Math.max(0, Math.min(100, porcentaje_avance))}%`,
-            backgroundColor: barColor,
+            fontFamily: "'Nunito', sans-serif",
+            fontSize: 17,
+            fontWeight: 900,
+            color: "#fff",
+            margin: 0,
           }}
-        />
+        >
+          {supera ? "¡Estás en ganancia, pues!" : "Necesitás vender más unidades nomás"}
+        </h3>
       </div>
-      <p className="text-xs text-gray-500 mt-2">
-        {porcentaje_avance}% del punto de equilibrio
+
+      {/* Stats */}
+      <p style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.65)", marginBottom: 14 }}>
+        Vendés {ventas_actuales} · Equilibrio en {punto_equilibrio} · Excedente:{" "}
+        <strong style={{ color: accentColor }}>
+          {excedente_unidades} {productoPlural}
+        </strong>
       </p>
+
+      {/* Bar + percentage */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div
+          style={{
+            flex: 1,
+            background: "rgba(255,255,255,0.15)",
+            borderRadius: 100,
+            height: 10,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              borderRadius: 100,
+              width: `${barPct}%`,
+              background: barGradient,
+              animation: "barFill 1.2s cubic-bezier(0.4,0,0.2,1) both 0.3s",
+            }}
+          />
+        </div>
+        <span
+          style={{
+            fontFamily: "'Nunito', sans-serif",
+            fontSize: 14,
+            fontWeight: 900,
+            color: accentColor,
+            flexShrink: 0,
+          }}
+        >
+          {porcentaje_avance}%
+        </span>
+      </div>
     </div>
   )
 }

@@ -8,27 +8,44 @@ import CostsPieChart from "@/frontend/components/CostsPieChart"
 import KallpaInsightCard from "@/frontend/components/KallpaInsightCard"
 import RecommendationsCard from "@/frontend/components/RecommendationsCard"
 
-export default function DashboardPanel({
-  analysis,
-}: {
-  analysis: KallpaAnalysis | null
-}) {
+export default function DashboardPanel({ analysis }: { analysis: KallpaAnalysis | null }) {
   if (!analysis) {
     return (
-      <div className="h-full bg-white rounded-xl shadow-sm flex flex-col items-center justify-center p-6 text-center">
+      <div
+        style={{
+          height: "100%",
+          background: "#fff",
+          borderRadius: "var(--radius-lg)",
+          boxShadow: "var(--shadow-sm)",
+          border: "1px solid var(--border)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 24,
+          textAlign: "center",
+        }}
+      >
         <div
-          className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-3"
-          style={{ backgroundColor: "#F8F5F0" }}
-          aria-hidden
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: "50%",
+            background: "var(--green-pale)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 28,
+            marginBottom: 12,
+          }}
         >
           📊
         </div>
-        <p className="font-semibold text-gray-700">
+        <p style={{ fontWeight: 700, color: "var(--text-mid)", fontSize: 15 }}>
           Tu análisis aparecerá acá
         </p>
-        <p className="text-sm text-gray-500 mt-1 max-w-sm">
-          Contale a Kallpa de tu negocio en el chat. Cuando tenga suficiente
-          info, vas a ver acá tus KPIs, gráficos y consejos.
+        <p style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 6, maxWidth: 260, lineHeight: 1.6 }}>
+          Contale a Kallpa de tu negocio en el chat. Cuando tenga suficiente info, vas a ver acá tus KPIs, gráficos y consejos.
         </p>
       </div>
     )
@@ -46,14 +63,88 @@ export default function DashboardPanel({
   } = dashboard_data
 
   return (
-    <div className="h-full bg-white rounded-xl shadow-sm overflow-y-auto p-4 space-y-4 animate-fadeIn">
-      <div className="border-b border-gray-100 pb-3">
-        <h2 className="font-bold text-[#374151]">{emprendedora.nombre}</h2>
-        <p className="text-sm text-gray-600">
-          {emprendedora.rubro} · {emprendedora.ciudad}
-        </p>
-        <p className="text-xs text-gray-400">
-          Análisis del {emprendedora.fecha_analisis}
+    <div
+      className="animate-fadeIn"
+      style={{
+        height: "100%",
+        overflowY: "auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: 14,
+        paddingRight: 2,
+      }}
+    >
+      {/* Business header card */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%)",
+          borderRadius: "var(--radius-xl)",
+          padding: "20px 22px",
+          position: "relative",
+          overflow: "hidden",
+          flexShrink: 0,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 14,
+            right: 14,
+            background: "rgba(255,255,255,0.1)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 8,
+            padding: "4px 10px",
+            fontSize: 10,
+            fontWeight: 800,
+            color: "rgba(255,255,255,0.75)",
+          }}
+        >
+          {emprendedora.fecha_analisis}
+        </div>
+
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 5,
+            background: "rgba(255,255,255,0.12)",
+            border: "1px solid rgba(255,255,255,0.18)",
+            borderRadius: 100,
+            padding: "3px 10px",
+            fontSize: 9,
+            fontWeight: 800,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--green-light)",
+            marginBottom: 10,
+          }}
+        >
+          <div
+            style={{
+              width: 5,
+              height: 5,
+              borderRadius: "50%",
+              background: "var(--green-light)",
+              animation: "pulseDot 2s ease-in-out infinite",
+            }}
+          />
+          Negocio activo
+        </div>
+
+        <h2
+          style={{
+            fontFamily: "'Nunito', sans-serif",
+            fontSize: 20,
+            fontWeight: 900,
+            color: "#fff",
+            lineHeight: 1.1,
+            marginBottom: 4,
+          }}
+        >
+          {emprendedora.nombre}
+        </h2>
+        <p style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.65)" }}>
+          {emprendedora.rubro}&nbsp;·&nbsp;{emprendedora.ciudad}
         </p>
       </div>
 

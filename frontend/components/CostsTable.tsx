@@ -29,68 +29,165 @@ export default function CostsTable({ items }: { items: CostItem[] }) {
     .reduce((a, b) => a + (b.monto_bs || 0), 0)
 
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-gray-100">
-        <h3 className="font-bold text-[#374151]">Costos Detallados</h3>
+    <div
+      style={{
+        background: "#fff",
+        borderRadius: "var(--radius-lg)",
+        boxShadow: "var(--shadow-sm)",
+        border: "1px solid var(--border)",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "18px 20px 0",
+        }}
+      >
+        <h3
+          style={{
+            fontFamily: "'Nunito', sans-serif",
+            fontSize: 15,
+            fontWeight: 900,
+            color: "var(--text-dark)",
+          }}
+        >
+          Costos Detallados
+        </h3>
         <button
           onClick={() => downloadCSV(items)}
-          className="px-3 py-1.5 text-sm bg-[#2D6A4F] text-white rounded-lg hover:bg-[#1f4a37] transition"
+          style={{
+            background: "var(--green-deep)",
+            color: "#fff",
+            border: "none",
+            borderRadius: 10,
+            padding: "8px 16px",
+            fontSize: 10,
+            fontWeight: 800,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+          }}
         >
-          Exportar CSV
+          ⬇ Exportar CSV
         </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-100 text-gray-600 text-xs uppercase">
+
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 14 }}>
+          <thead>
             <tr>
-              <th className="px-4 py-2 text-left">#</th>
-              <th className="px-4 py-2 text-left">Concepto</th>
-              <th className="px-4 py-2 text-left">Tipo</th>
-              <th className="px-4 py-2 text-right">Monto (Bs)</th>
-              <th className="px-4 py-2 text-left">Frecuencia</th>
+              {["#", "Concepto", "Tipo", "Monto (Bs)"].map((h) => (
+                <th
+                  key={h}
+                  style={{
+                    padding: "8px 20px",
+                    fontSize: 10,
+                    fontWeight: 800,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "var(--text-muted)",
+                    background: "var(--surface)",
+                    textAlign: h === "Monto (Bs)" ? "right" : "left",
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {items.map((item, idx) => (
-              <tr
-                key={item.id}
-                className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
-              >
-                <td className="px-4 py-2 text-gray-500 font-mono text-xs">
-                  {item.id}
+              <tr key={item.id} style={{ borderTop: "1px solid var(--border)" }}>
+                <td style={{ padding: "12px 20px", fontSize: 12, color: "var(--text-muted)" }}>
+                  {idx + 1}
                 </td>
-                <td className="px-4 py-2 text-[#374151]">{item.concepto}</td>
-                <td className="px-4 py-2">
+                <td style={{ padding: "12px 20px", fontSize: 13, fontWeight: 700, color: "var(--text-dark)" }}>
+                  {item.concepto}
+                </td>
+                <td style={{ padding: "12px 20px" }}>
                   <span
-                    className="rounded-full px-2 py-1 text-xs font-semibold text-white"
                     style={{
-                      backgroundColor:
-                        item.tipo === "Fijo" ? "#2D6A4F" : "#E76F51",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      borderRadius: 100,
+                      padding: "3px 10px",
+                      fontSize: 11,
+                      fontWeight: 800,
+                      background: item.tipo === "Fijo" ? "#e3f5ed" : "var(--amber-light)",
+                      color: item.tipo === "Fijo" ? "var(--green-mid)" : "var(--amber)",
                     }}
                   >
                     {item.tipo}
                   </span>
                 </td>
-                <td className="px-4 py-2 text-right text-[#374151] font-medium">
+                <td
+                  style={{
+                    padding: "12px 20px",
+                    fontSize: 13,
+                    fontWeight: 700,
+                    textAlign: "right",
+                    color: "var(--text-dark)",
+                  }}
+                >
                   {(item.monto_bs || 0).toFixed(2)}
                 </td>
-                <td className="px-4 py-2 text-gray-600">{item.frecuencia}</td>
               </tr>
             ))}
-            <tr className="bg-gray-100 font-bold text-[#374151]">
-              <td className="px-4 py-3" colSpan={2}>
+
+            {/* Totals row */}
+            <tr>
+              <td
+                colSpan={2}
+                style={{
+                  padding: "14px 20px",
+                  background: "var(--green-pale)",
+                  fontFamily: "'Nunito', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 900,
+                  borderTop: "2px solid var(--green-light)",
+                  color: "var(--text-dark)",
+                }}
+              >
                 Totales
               </td>
-              <td className="px-4 py-3" style={{ color: "#2D6A4F" }}>
-                Total Fijos: Bs {totalFijos}
-              </td>
               <td
-                className="px-4 py-3 text-right"
-                style={{ color: "#E76F51" }}
+                colSpan={2}
+                style={{
+                  padding: "14px 20px",
+                  background: "var(--green-pale)",
+                  borderTop: "2px solid var(--green-light)",
+                }}
               >
-                Total Variables/u: Bs {totalVariables}
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 800,
+                      padding: "5px 12px",
+                      borderRadius: 8,
+                      background: "#e3f5ed",
+                      color: "var(--green-mid)",
+                    }}
+                  >
+                    Fijos: Bs {totalFijos.toLocaleString()}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 800,
+                      padding: "5px 12px",
+                      borderRadius: 8,
+                      background: "var(--amber-light)",
+                      color: "var(--amber)",
+                    }}
+                  >
+                    Variables/u: Bs {totalVariables.toLocaleString()}
+                  </span>
+                </div>
               </td>
-              <td className="px-4 py-3"></td>
             </tr>
           </tbody>
         </table>

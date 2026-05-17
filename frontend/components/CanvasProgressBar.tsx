@@ -2,51 +2,11 @@
 
 import type { CanvasProgress, CanvasType } from "@/types/kallpa"
 
-type BadgeStyle = {
-  emoji: string
-  label: string
-  bg: string
-  text: string
-}
-
-function badgeFor(type: CanvasType | null): BadgeStyle {
-  switch (type) {
-    case "business_model_canvas":
-      return {
-        emoji: "📋",
-        label: "Business Model Canvas",
-        bg: "#2D6A4F",
-        text: "#FFFFFF",
-      }
-    case "lean_canvas":
-      return {
-        emoji: "🚀",
-        label: "Lean Canvas",
-        bg: "#1E40AF",
-        text: "#FFFFFF",
-      }
-    case "value_proposition":
-      return {
-        emoji: "💎",
-        label: "Propuesta de Valor",
-        bg: "#E76F51",
-        text: "#FFFFFF",
-      }
-    case "jobs_to_be_done":
-      return {
-        emoji: "🎯",
-        label: "Jobs To Be Done",
-        bg: "#7C3AED",
-        text: "#FFFFFF",
-      }
-    default:
-      return {
-        emoji: "🔍",
-        label: "Detectando tipo de negocio…",
-        bg: "#9CA3AF",
-        text: "#FFFFFF",
-      }
-  }
+const CANVAS_LABELS: Record<string, { emoji: string; label: string }> = {
+  business_model_canvas: { emoji: "📋", label: "Business Model Canvas" },
+  lean_canvas:           { emoji: "🚀", label: "Lean Canvas" },
+  value_proposition:     { emoji: "💎", label: "Propuesta de Valor" },
+  jobs_to_be_done:       { emoji: "🎯", label: "Jobs To Be Done" },
 }
 
 export default function CanvasProgressBar({
@@ -58,52 +18,162 @@ export default function CanvasProgressBar({
 }) {
   if (!progress) return null
 
-  const badge = badgeFor(canvasType)
   const pct = Math.max(0, Math.min(100, progress.porcentaje ?? 0))
   const isComplete = progress.listo_para_generar === true
+  const badge = canvasType ? (CANVAS_LABELS[canvasType] ?? { emoji: "🔍", label: "Detectando…" }) : { emoji: "🔍", label: "Detectando…" }
+
+  const checkItems =
+    progress.campos_completos.length > 0
+      ? progress.campos_completos.map((f) => ({ label: f.label, done: f.completo }))
+      : progress.campos_faltantes.length > 0
+        ? [
+            ...Array.from({ length: Math.round((pct / 100) * (progress.campos_faltantes.length + Math.round((pct / 100) * 5))) }).map((_, i) => ({ label: `Campo ${i + 1}`, done: true })),
+            ...progress.campos_faltantes.map((f) => ({ label: f, done: false })),
+          ]
+        : []
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 space-y-3">
-      <div className="flex items-center gap-2">
-        <span
-          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
-          style={{ backgroundColor: badge.bg, color: badge.text }}
-        >
-          <span aria-hidden>{badge.emoji}</span>
-          <span>{badge.label}</span>
-        </span>
+    <div
+      style={{
+        background: "#fff",
+        borderRadius: "var(--radius-lg)",
+        padding: 18,
+        border: "1px solid var(--border)",
+        boxShadow: "var(--shadow-sm)",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+      }}
+    >
+      {/* Canvas type pill */}
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          background: "var(--green-pale)",
+          border: "1.5px solid var(--green-light)",
+          borderRadius: 100,
+          padding: "6px 14px",
+          fontSize: 12,
+          fontWeight: 800,
+          color: "var(--green-mid)",
+          letterSpacing: "0.04em",
+          alignSelf: "flex-start",
+        }}
+      >
+        <span>{badge.emoji}</span>
+        {badge.label}
       </div>
 
+      {/* Progress bar */}
       <div>
         <div
-          className="w-full bg-gray-200 rounded-full h-3 overflow-hidden"
-          role="progressbar"
-          aria-valuenow={pct}
-          aria-valuemin={0}
-          aria-valuemax={100}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 8,
+          }}
+        >
+          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text-mid)" }}>
+            Progreso del análisis estratégico
+          </span>
+          <span
+            style={{
+              fontFamily: "'Nunito', sans-serif",
+              fontSize: 16,
+              fontWeight: 900,
+              color: "var(--green-mid)",
+            }}
+          >
+            {pct}%
+          </span>
+        </div>
+        <div
+          style={{
+            background: "var(--green-pale)",
+            borderRadius: 100,
+            height: 10,
+            overflow: "hidden",
+          }}
         >
           <div
-            className="h-full transition-all duration-700"
-            style={{ width: `${pct}%`, backgroundColor: "#2D6A4F" }}
+            style={{
+              background: "linear-gradient(90deg, var(--green-mid), var(--green-bright))",
+              height: "100%",
+              borderRadius: 100,
+              width: `${pct}%`,
+              animation: "barFill 1.4s cubic-bezier(0.4,0,0.2,1) both 0.6s",
+            }}
           />
         </div>
-        <p className="mt-1 text-xs text-gray-600">{pct}% completado</p>
       </div>
 
-      {pct < 100 && progress.campos_faltantes.length > 0 && (
-        <p className="text-xs text-gray-500">
+      {/* Checklist */}
+      {checkItems.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {checkItems.map((item, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 10,
+                  flexShrink: 0,
+                  background: item.done ? "var(--green-bright)" : "var(--surface)",
+                  border: item.done ? "none" : "1.5px solid var(--border)",
+                  color: item.done ? "#fff" : "var(--text-muted)",
+                }}
+              >
+                {item.done ? "✓" : "·"}
+              </div>
+              <span
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: item.done ? "var(--text-mid)" : "var(--text-muted)",
+                  opacity: item.done ? 1 : 0.6,
+                }}
+              >
+                {item.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Missing fields fallback */}
+      {checkItems.length === 0 && !isComplete && progress.campos_faltantes.length > 0 && (
+        <p style={{ fontSize: 12, fontWeight: 600, color: "var(--text-muted)" }}>
           Falta:{" "}
-          <span className="text-gray-700">
-            {progress.campos_faltantes.join(", ")}
-          </span>
+          <span style={{ color: "var(--text-mid)" }}>{progress.campos_faltantes.join(", ")}</span>
         </p>
       )}
 
+      {/* Ready message */}
       {isComplete && (
-        <p className="text-sm font-semibold text-[#2D6A4F] flex items-center gap-1">
-          <span aria-hidden>✅</span>
+        <div
+          style={{
+            background: "var(--green-pale)",
+            border: "1.5px solid var(--green-light)",
+            borderRadius: "var(--radius-sm)",
+            padding: "12px 16px",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: 12,
+            fontWeight: 800,
+            color: "var(--green-mid)",
+          }}
+        >
+          <span style={{ fontSize: 16 }}>✅</span>
           ¡Canvas listo! Generando tu análisis estratégico…
-        </p>
+        </div>
       )}
     </div>
   )

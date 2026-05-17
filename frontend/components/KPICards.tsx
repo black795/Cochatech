@@ -11,8 +11,12 @@ type Card = {
 
 export default function KPICards({
   indicators,
+  productoSingular = "unidad",
+  productoPlural = "unidades",
 }: {
   indicators: FinancialIndicators
+  productoSingular?: string
+  productoPlural?: string
 }) {
   const cards: Card[] = [
     {
@@ -24,24 +28,24 @@ export default function KPICards({
     {
       label: "Costo Variable por Unidad",
       value: `Bs ${indicators.costos_variables_unitarios}`,
-      subtitle: "Costo de producir 1 torta",
+      subtitle: `Costo de producir 1 ${productoSingular}`,
       borderColor: "#E76F51",
     },
     {
       label: "Precio de Venta",
       value: `Bs ${indicators.precio_de_venta}`,
-      subtitle: "Precio por torta",
+      subtitle: `Precio por ${productoSingular}`,
       borderColor: "#E9C46A",
     },
     {
       label: "Margen de Ganancia",
       value: `${indicators.margen_ganancia_porcentual}%`,
-      subtitle: "Margen por unidad vendida",
+      subtitle: `Margen por ${productoSingular} vendida`,
       borderColor: "#2D6A4F",
     },
     {
       label: "Punto de Equilibrio",
-      value: `${indicators.punto_de_equilibrio_unidades} unidades/mes`,
+      value: `${indicators.punto_de_equilibrio_unidades} ${productoPlural}/mes`,
       subtitle: "Mínimo para no perder",
       borderColor: "#E76F51",
     },

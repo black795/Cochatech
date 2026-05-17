@@ -129,5 +129,7 @@ export const mockKallpaAnalysis: KallpaAnalysis = buildFullAnalysis(
   18,
   "Lorena Mamani",
   "Repostería artesanal — Tortas decoradas",
-  "Sacaba, Cochabamba"
+  "Sacaba, Cochabamba",
+  "torta",
+  "tortas"
 )

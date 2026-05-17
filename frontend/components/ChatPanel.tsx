@@ -7,6 +7,7 @@ import type {
   CanvasProgress,
   CanvasType,
   ChatMessage,
+  ExtractedFinancialData,
   KallpaAnalysis,
   UIMessage,
 } from "@/types/kallpa"
@@ -39,6 +40,8 @@ export default function ChatPanel({
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const lastAnalysisRef = useRef<KallpaAnalysis | null>(null)
+  const accumulatedExtractionRef = useRef<ExtractedFinancialData | null>(null)
 
   // Mount-only welcome message to avoid SSR/CSR Date mismatch
   useEffect(() => {
@@ -86,6 +89,7 @@ export default function ChatPanel({
         body: JSON.stringify({
           messages: priorHistory,
           lastUserMessage: text,
+          previous_extracted_data: accumulatedExtractionRef.current,
         }),
       })
 
@@ -96,6 +100,11 @@ export default function ChatPanel({
         canvas_progress?: CanvasProgress
         canvas_ready?: boolean
         canvas?: BusinessCanvas | null
+        merged_extraction?: ExtractedFinancialData
+      }
+
+      if (data.merged_extraction) {
+        accumulatedExtractionRef.current = data.merged_extraction
       }
 
       const assistantMsg: UIMessage = {
@@ -108,7 +117,9 @@ export default function ChatPanel({
       }
       setMessages((prev) => [...prev, assistantMsg])
 
+      // Always update analysis when new data comes in; keep the last known analysis otherwise
       if (data.analysis) {
+        lastAnalysisRef.current = data.analysis
         onAnalysisReady(data.analysis)
       }
 

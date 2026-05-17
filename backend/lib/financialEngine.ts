@@ -11,13 +11,13 @@ import type {
 export function calcularCostosFijosTotales(items: CostItem[]): number {
   return items
     .filter((item) => item.tipo === "Fijo")
-    .reduce((acc, item) => acc + item.monto_bs, 0)
+    .reduce((acc, item) => acc + (item.monto_bs || 0), 0)
 }
 
 export function calcularCostosVariablesUnitarios(items: CostItem[]): number {
   return items
     .filter((item) => item.tipo === "Variable")
-    .reduce((acc, item) => acc + item.monto_bs, 0)
+    .reduce((acc, item) => acc + (item.monto_bs || 0), 0)
 }
 
 export function calcularMargenUnitario(
@@ -38,6 +38,7 @@ export function calcularPuntoEquilibrio(
   costosFijos: number,
   margenUnitario: number
 ): number {
+  if (margenUnitario <= 0) return 0
   return Math.ceil(costosFijos / margenUnitario)
 }
 
@@ -47,7 +48,9 @@ export function buildFullAnalysis(
   ventasMes: number,
   nombre: string,
   rubro: string,
-  ciudad: string
+  ciudad: string,
+  productoSingular: string = "unidad",
+  productoPlural: string = "unidades"
 ): KallpaAnalysis {
   const costosFijos = calcularCostosFijosTotales(rawItems)
   const costoVariableUnitario = calcularCostosVariablesUnitarios(rawItems)
@@ -93,13 +96,18 @@ export function buildFullAnalysis(
       fill: "#E9C46A",
     }))
 
+  const porcentajeAvance =
+    puntoEquilibrio > 0
+      ? Math.min(
+          parseFloat(((ventasMes / puntoEquilibrio) * 100).toFixed(1)),
+          100
+        )
+      : 0
+
   const equilibrioProgress: EquilibriumProgress = {
     ventas_actuales: ventasMes,
     punto_equilibrio: puntoEquilibrio,
-    porcentaje_avance: Math.min(
-      parseFloat(((ventasMes / puntoEquilibrio) * 100).toFixed(1)),
-      100
-    ),
+    porcentaje_avance: porcentajeAvance,
     excedente_unidades: unidadesSobreEquilibrio,
   }
 
@@ -116,6 +124,8 @@ export function buildFullAnalysis(
     ganancia_neta_mensual_bs: gananciaNetaMensual,
     supera_punto_equilibrio: superaPuntoEquilibrio,
     unidades_sobre_equilibrio: unidadesSobreEquilibrio,
+    producto_singular: productoSingular,
+    producto_plural: productoPlural,
     charts: {
       distribucion_costos: distribucionCostos,
       desglose_variables_por_unidad: desgloseVariablesPorUnidad,
@@ -134,13 +144,15 @@ export function buildFullAnalysis(
 export function buildAnalysisFromExtraction(
   extracted: ClaudeExtractionResponse["extracted_data"]
 ): KallpaAnalysis {
-  const rawItems: CostItem[] = extracted.costs.map((cost, index) => ({
-    id: `COST_${String(index + 1).padStart(3, "0")}`,
-    concepto: cost.concepto,
-    tipo: cost.tipo,
-    monto_bs: cost.monto_bs,
-    frecuencia: cost.frecuencia,
-  }))
+  const rawItems: CostItem[] = (extracted.costs || [])
+    .filter((cost) => cost.concepto && cost.monto_bs != null)
+    .map((cost, index) => ({
+      id: `COST_${String(index + 1).padStart(3, "0")}`,
+      concepto: cost.concepto,
+      tipo: cost.tipo || "Variable",
+      monto_bs: cost.monto_bs || 0,
+      frecuencia: cost.frecuencia || "mensual",
+    }))
 
   return buildFullAnalysis(
     rawItems,
@@ -148,6 +160,8 @@ export function buildAnalysisFromExtraction(
     extracted.ventas_mes ?? 0,
     extracted.nombre_emprendedora ?? "Emprendedora",
     extracted.rubro ?? "Emprendimiento",
-    extracted.ciudad ?? "Cochabamba"
+    extracted.ciudad ?? "Cochabamba",
+    extracted.producto_singular ?? "unidad",
+    extracted.producto_plural ?? "unidades"
   )
 }

@@ -5,8 +5,8 @@ import type { CostItem } from "@/types/kallpa"
 function downloadCSV(items: CostItem[]) {
   const headers = "id,concepto,tipo,monto_bs,frecuencia"
   const rows = items.map((i) => {
-    const concepto = `"${i.concepto.replace(/"/g, '""')}"`
-    return `${i.id},${concepto},${i.tipo},${i.monto_bs},${i.frecuencia}`
+    const concepto = `"${(i.concepto || "").replace(/"/g, '""')}"`
+    return `${i.id || ""},${concepto},${i.tipo || ""},${i.monto_bs || 0},${i.frecuencia || ""}`
   })
   const csv = [headers, ...rows].join("\n")
   const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" })
@@ -23,10 +23,10 @@ function downloadCSV(items: CostItem[]) {
 export default function CostsTable({ items }: { items: CostItem[] }) {
   const totalFijos = items
     .filter((i) => i.tipo === "Fijo")
-    .reduce((a, b) => a + b.monto_bs, 0)
+    .reduce((a, b) => a + (b.monto_bs || 0), 0)
   const totalVariables = items
     .filter((i) => i.tipo === "Variable")
-    .reduce((a, b) => a + b.monto_bs, 0)
+    .reduce((a, b) => a + (b.monto_bs || 0), 0)
 
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -72,7 +72,7 @@ export default function CostsTable({ items }: { items: CostItem[] }) {
                   </span>
                 </td>
                 <td className="px-4 py-2 text-right text-[#374151] font-medium">
-                  {item.monto_bs.toFixed(2)}
+                  {(item.monto_bs || 0).toFixed(2)}
                 </td>
                 <td className="px-4 py-2 text-gray-600">{item.frecuencia}</td>
               </tr>

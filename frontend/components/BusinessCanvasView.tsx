@@ -3,9 +3,9 @@
 import type { BusinessCanvas, CanvasType } from "@/types/kallpa"
 
 function getCriterio(
-  seccion: { criterios: { nombre: string; respuesta: string }[] }
+  seccion?: { criterios?: { nombre: string; respuesta: string }[] }
 ): string {
-  return seccion.criterios[0]?.respuesta ?? ""
+  return seccion?.criterios?.[0]?.respuesta ?? ""
 }
 
 function Block({
@@ -40,9 +40,9 @@ function Block({
 
 function BMCView({ canvas }: { canvas: BusinessCanvas }) {
   const socios =
-    canvas.asociacionesClaves.socios[0]?.aporte ?? ""
+    canvas.asociacionesClaves?.socios?.[0]?.aporte ?? ""
   const ingresos =
-    canvas.fuentesIngresos.lineas
+    (canvas.fuentesIngresos?.lineas ?? [])
       .map((l) =>
         l.producto
           ? `${l.producto}${l.precioEstimado ? ` (Bs ${l.precioEstimado})` : ""}`
@@ -51,8 +51,9 @@ function BMCView({ canvas }: { canvas: BusinessCanvas }) {
       .filter(Boolean)
       .join(" · ") || ""
   const costos =
-    canvas.estructuraCostos.costos
-      .map((c) => `${c.concepto} (${c.tipo})`)
+    (canvas.estructuraCostos?.costos ?? [])
+      .filter((c) => c.concepto)
+      .map((c) => `${c.concepto} (${c.tipo || "N/A"})`)
       .join(" · ") || ""
 
   return (

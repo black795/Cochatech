@@ -6,6 +6,7 @@ import EquilibriumBadge from "@/frontend/components/EquilibriumBadge"
 import CostsTable from "@/frontend/components/CostsTable"
 import CostsPieChart from "@/frontend/components/CostsPieChart"
 import KallpaInsightCard from "@/frontend/components/KallpaInsightCard"
+import RecommendationsCard from "@/frontend/components/RecommendationsCard"
 
 export default function DashboardPanel({
   analysis,
@@ -34,8 +35,15 @@ export default function DashboardPanel({
   }
 
   const { dashboard_data, financial_indicators, excel_simulation } = analysis
-  const { emprendedora, charts, supera_punto_equilibrio, kallpa_insight } =
-    dashboard_data
+  const {
+    emprendedora,
+    charts,
+    supera_punto_equilibrio,
+    kallpa_insight,
+    producto_singular,
+    producto_plural,
+    ventas_actuales_mes,
+  } = dashboard_data
 
   return (
     <div className="h-full bg-white rounded-xl shadow-sm overflow-y-auto p-4 space-y-4 animate-fadeIn">
@@ -49,12 +57,25 @@ export default function DashboardPanel({
         </p>
       </div>
 
-      <KPICards indicators={financial_indicators} />
+      <KPICards
+        indicators={financial_indicators}
+        productoSingular={producto_singular}
+        productoPlural={producto_plural}
+      />
 
       <EquilibriumBadge
         progress={charts.equilibrio_progress}
         supera={supera_punto_equilibrio}
+        productoPlural={producto_plural}
       />
+
+      {!supera_punto_equilibrio && (
+        <RecommendationsCard
+          indicators={financial_indicators}
+          ventasActuales={ventas_actuales_mes}
+          productoPlural={producto_plural}
+        />
+      )}
 
       <CostsPieChart data={charts.distribucion_costos} />
 

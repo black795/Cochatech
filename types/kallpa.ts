@@ -53,6 +53,8 @@ export interface DashboardData {
   ganancia_neta_mensual_bs: number
   supera_punto_equilibrio: boolean
   unidades_sobre_equilibrio: number
+  producto_singular: string
+  producto_plural: string
   charts: DashboardCharts
   kallpa_insight: string
 }
@@ -95,17 +97,21 @@ export interface ExtractedCost {
   frecuencia: "mensual" | "por_unidad"
 }
 
+export interface ExtractedFinancialData {
+  costs: ExtractedCost[]
+  precio_venta: number | null
+  ventas_mes: number | null
+  nombre_emprendedora: string | null
+  rubro: string | null
+  ciudad: string | null
+  producto_singular: string | null
+  producto_plural: string | null
+}
+
 export interface ClaudeExtractionResponse {
   reply: string
   has_enough_data: boolean
-  extracted_data: {
-    costs: ExtractedCost[]
-    precio_venta: number | null
-    ventas_mes: number | null
-    nombre_emprendedora: string | null
-    rubro: string | null
-    ciudad: string | null
-  }
+  extracted_data: ExtractedFinancialData
 }
 
 export interface PlanillaProducto {

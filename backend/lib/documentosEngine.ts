@@ -75,11 +75,13 @@ export function buildBusinessCanvasBase(
       socios: [],
     },
     estructuraCostos: {
-      costos: excel_simulation.map((item) => ({
-        concepto: item.concepto,
-        tipo: item.tipo,
-        prioridad: item.tipo === "Fijo" ? "Alta" : "Media",
-      })),
+      costos: excel_simulation
+        .filter((item) => item.concepto)
+        .map((item) => ({
+          concepto: item.concepto,
+          tipo: item.tipo || "N/A",
+          prioridad: item.tipo === "Fijo" ? "Alta" : "Media",
+        })),
     },
   }
 }

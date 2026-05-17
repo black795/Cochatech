@@ -5,9 +5,11 @@ import type { EquilibriumProgress } from "@/types/kallpa"
 export default function EquilibriumBadge({
   progress,
   supera,
+  productoPlural = "unidades",
 }: {
   progress: EquilibriumProgress
   supera: boolean
+  productoPlural?: string
 }) {
   const {
     ventas_actuales,
@@ -39,9 +41,9 @@ export default function EquilibriumBadge({
         <h3 className={`font-bold text-lg ${textCls}`}>{message}</h3>
       </div>
       <p className="text-sm text-gray-700 mb-3">
-        Vendés <strong>{ventas_actuales}</strong> tortas · Necesitás{" "}
-        <strong>{punto_equilibrio}</strong> tortas · Excedente:{" "}
-        <strong>{excedente_unidades}</strong> tortas
+        Vendés <strong>{ventas_actuales}</strong> {productoPlural} · Necesitás{" "}
+        <strong>{punto_equilibrio}</strong> {productoPlural} · Excedente:{" "}
+        <strong>{excedente_unidades}</strong> {productoPlural}
       </p>
       <div
         className="w-full bg-gray-200 rounded-full h-3 overflow-hidden"
